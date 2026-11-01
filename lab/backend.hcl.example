@@ -1,0 +1,4 @@
+# Fill in from `terraform output` in bootstrap/, save as backend.hcl (git-ignored)
+resource_group_name  = "rg-homelab-core"
+storage_account_name = "sthomelabtfxxxxx"
+container_name       = "tfstate"

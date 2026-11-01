@@ -1,0 +1,35 @@
+{
+  "autotermination_minutes": {
+    "type": "range",
+    "minValue": 5,
+    "maxValue": 20,
+    "defaultValue": 10
+  },
+  "node_type_id": {
+    "type": "allowlist",
+    "values": ["Standard_D4ds_v5", "Standard_DS3_v2", "Standard_F4s_v2"],
+    "defaultValue": "Standard_D4ds_v5"
+  },
+  "driver_node_type_id": {
+    "type": "allowlist",
+    "values": ["Standard_D4ds_v5", "Standard_DS3_v2", "Standard_F4s_v2"],
+    "defaultValue": "Standard_D4ds_v5"
+  },
+  "num_workers": {
+    "type": "range",
+    "maxValue": 2,
+    "defaultValue": 0
+  },
+  "autoscale.max_workers": {
+    "type": "range",
+    "maxValue": 2
+  },
+  "azure_attributes.availability": {
+    "type": "fixed",
+    "value": "SPOT_WITH_FALLBACK_AZURE"
+  },
+  "custom_tags.project": {
+    "type": "fixed",
+    "value": "homelab"
+  }
+}

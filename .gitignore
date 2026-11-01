@@ -1,0 +1,16 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# Local config with IDs / emails — never commit
+*.tfvars
+!*.tfvars.example
+backend.hcl
+
+# Python / Databricks
+__pycache__/
+.venv/
+.databricks/
