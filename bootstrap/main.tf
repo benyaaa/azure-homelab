@@ -22,7 +22,18 @@ terraform {
 provider "azurerm" {
   features {}
   subscription_id = var.subscription_id
+
+  # Provider 5.x registers no Azure services by default. Register only what bootstrap uses.
+  resource_provider_registrations = "none"
+  resource_providers_to_register = [
+    "Microsoft.Storage",
+    "Microsoft.Consumption",
+    "Microsoft.CostManagement",
+    "Microsoft.PolicyInsights",
+  ]
 }
+
+data "azurerm_client_config" "current" {}
 
 locals {
   tags = {
@@ -67,6 +78,14 @@ resource "azurerm_storage_container" "tfstate" {
   name                  = "tfstate"
   storage_account_id    = azurerm_storage_account.tfstate.id
   container_access_type = "private"
+}
+
+# The lab's backend authenticates with your Entra ID identity (use_azuread_auth),
+# which needs a DATA-plane role. Owner on the subscription is control-plane only.
+resource "azurerm_role_assignment" "me_tfstate" {
+  scope                = azurerm_storage_account.tfstate.id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = data.azurerm_client_config.current.object_id
 }
 
 # --- Guardrail 1: monthly budget with email alerts ---------------------------
